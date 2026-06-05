@@ -9,10 +9,12 @@ Brain tumors are abnormal growths of tissue in the brain or central spinal canal
 ### Base Pipeline
 The **Base Pipeline** serves as our baseline approach. It utilizes the standard **ResNet-50** architecture, a powerful deep convolutional network that employs residual learning to alleviate the vanishing gradient problem. In this pipeline, the MRI images undergo standard resizing and normalization before being passed into the ResNet-50 model. The model extracts deep features and classifies the images into 'Brain Tumor' or 'Healthy' categories. 
 
-### Proposed Pipeline (ResNet-DenseNet Hybrid + CLAHE)
+### Proposed Pipeline (Hybrid Architectures + CLAHE)
 The **Proposed Pipeline** introduces significant enhancements to improve both feature extraction and diagnostic accuracy:
 1.  **Image Preprocessing (CLAHE):** MRI images often suffer from poor contrast, making it difficult to distinguish tumor boundaries. We apply **Contrast Limited Adaptive Histogram Equalization (CLAHE)**, a technique that improves the local contrast and enhances the definitions of edges in each region of the MRI scan.
-2.  **Hybrid Architecture:** We designed a custom **ResNet-DenseNet** hybrid model. By combining ResNet's residual connections (which preserve gradient flow) with DenseNet's dense connectivity (which encourages feature reuse and reduces parameter count), the hybrid model captures a richer set of features from the enhanced MRI scans, leading to state-of-the-art classification performance.
+2.  **Hybrid Architectures:** We designed and evaluated two custom hybrid models to maximize feature extraction from the enhanced MRI scans:
+    *   **Hybrid 1 (ResNet18 & DenseNet121):** Combines ResNet's residual connections (which preserve gradient flow) with DenseNet's dense connectivity (which encourages feature reuse and reduces parameter count).
+    *   **Hybrid 2 (DenseNet & EfficientNet):** Combines DenseNet's dense feature representation with EfficientNet's highly optimized scaling and feature extraction capabilities, leading to state-of-the-art classification performance.
 
 ## Dataset & Sample Images
 
@@ -36,7 +38,7 @@ Brain-Tumor-Image-Detection/
 │   ├── Base Code.ipynb       # Baseline implementation using ResNet-50
 │   └── ResNet Model/         # Saved baseline models
 ├── Proposed Pipeline/
-│   └── Proposed code.ipynb   # Proposed hybrid model (ResNet-DenseNet) + CLAHE
+│   └── Proposed code.ipynb   # Proposed hybrid models (ResNet-DenseNet & DenseNet-EfficientNet) + CLAHE
 ├── Brain Tumor Data Set/     # Downloaded dataset directory
 ├── Base Paper.pdf            # Reference research paper
 └── README.md
@@ -49,9 +51,10 @@ Both pipelines were evaluated on a dedicated test set. The proposed pipeline sho
 | Pipeline | Architecture | Preprocessing | Test Accuracy | Precision | Recall | F1-Score |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Base Pipeline** | ResNet-50 | Standard Resizing/Normalization | **97.33%** | 97.47% | 95.06% | 97.47% |
-| **Proposed Pipeline** | **ResNet-DenseNet Hybrid** | **CLAHE** | **99.33%** | 99.29% | 99.38% | 99.33% |
+| **Proposed Pipeline** | **Hybrid 1: ResNet18 & DenseNet121** | **CLAHE** | **98.67%** | 98.59% | 98.77% | 98.66% |
+| **Proposed Pipeline** | **Hybrid 2: DenseNet & EfficientNet** | **CLAHE** | **99.33%** | 99.29% | 99.38% | 99.33% |
 
-*The proposed ResNet-DenseNet architecture, combined with CLAHE, effectively reduces false negatives (improves recall to 99.38%), which is critical in medical diagnostics.*
+*Both proposed hybrid architectures, combined with CLAHE, show significant improvements over the baseline. The DenseNet & EfficientNet hybrid effectively reduces false negatives (improves recall to 99.38%), which is critical in medical diagnostics.*
 
 ## Technologies Used
 
